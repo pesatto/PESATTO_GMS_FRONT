@@ -1,0 +1,7 @@
+[build]
+publish = "dist/pesatto-gms-front/browser"
+command = "ng build"
+[[redirects]]
+from = "/*"
+to = "/index.html"
+status = 200

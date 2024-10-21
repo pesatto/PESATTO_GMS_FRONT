@@ -1,0 +1,49 @@
+/* You can add global styles to this file, and also import other style files */
+// Import CoreUI functions
+@import "@coreui/coreui-pro/scss/functions";
+
+// If you want to override variables do it here
+@import "scss/variables";
+@import "scss/variables-dark";
+
+// Import styles with default layout.
+@import "@coreui/coreui-pro/scss/coreui";
+
+// Import Chart.js custom tooltips styles
+@import "@coreui/chartjs/scss/coreui-chartjs";
+
+// Custom styles for this theme
+@import "scss/theme";
+
+// Some temp fixes
+//@import "fixes";
+
+// If you want to add custom CSS you can put it here.
+@import "scss/custom";
+@import "@coreui/icons";
+
+$sidebar-bg: #48444c;
+
+:root {
+
+    .sidebar-dark {
+        --cui-body-bg: #48444c;
+        --cui-border-color: #625d68;
+    }
+    
+
+}
+[data-coreui-theme=dark] {
+    --cui-body-bg: #48444c;
+    --cui-border-color: #625d68;
+    --background-color: #625d68;
+    --cui-dark-bg-subtle: #625d68
+}
+
+[data-coreui-theme=light] .scout {
+    background-color: #fff;
+}
+
+[data-coreui-theme=dark] .scout {
+    background-color: #48444c;
+}

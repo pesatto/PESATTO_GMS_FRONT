@@ -1,0 +1,7 @@
+{
+  "name": "pesatto-gms-front",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "custom"
+}

@@ -1,0 +1,42 @@
+
+<c-card>
+    <c-card-header>
+        Modelos
+    </c-card-header>
+    <c-card-body>
+        <div *ngIf="loading" class="fade show" style="text-align: center;">
+            <button cButton class="m-1" variant="outline" disabled>
+                <c-spinner aria-hidden="true" size="sm" variant="grow"></c-spinner>
+                Loading...
+              </button>
+        </div>
+        <table cTable hover responsive="md" class="fade show" *ngIf="!loading">
+            <thead>
+                <tr>
+                    <th width="2vw">Nombre</th>
+                    <th width="5vw">Poder/Voltaje</th>
+                    <th width="2vw">HZ</th>
+                    <th width="2vw">RPM</th>
+                    <th width="2vw">BAT</th>
+                    <th width="2vw">TMP</th>
+                    <th width="2vw">OIL</th>
+                    <th width="2vw">AMPS</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let model of models" (click)="openMode(model._id)">
+                    <td>{{model.name}}</td>
+                    <td>{{model.power}} Kw / {{ model.voltaje }} V</td>
+                    <td>{{model.hz}} Hz</td>
+                    <td>{{model.rpm}} Rpm</td>
+                    <td>{{model.battery}} V</td>
+                    <td>{{model.temp}} C</td>
+                    <td>{{model.oil}} Kpa</td>
+                    <td>{{model.amps}} Amps</td>
+                </tr>
+            </tbody>
+        </table>
+        
+    </c-card-body>
+</c-card>
+<button *ngIf="[4,5].includes(userType)" cButton class="float" color="success" style="color: white;"><svg [cIcon]="icons.cilPlus"></svg></button>

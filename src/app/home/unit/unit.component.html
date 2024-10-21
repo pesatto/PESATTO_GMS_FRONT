@@ -1,0 +1,254 @@
+<div *ngIf="loading" class="fade show" style="text-align: center;">
+    <button cButton class="m-1" variant="outline" disabled>
+        <c-spinner aria-hidden="true" size="sm" variant="grow"></c-spinner>
+        Loading...
+    </button>
+</div>
+<div *ngIf="!loading">
+    <c-row>
+        <c-col lg="8" md="8">
+            <c-card [cBorder]="{top: {color: color(), width: 3}}">
+                <c-card-header><strong>{{unit.name}} ({{unit.serial}})</strong></c-card-header>
+                <c-card-body>
+                    <c-row>
+                        <c-col>
+                            <ul cListGroup flush>
+                                <li cListGroupItem class="d-flex justify-content-between align-items-center">
+                                    Modelo
+                                    <c-badge color="primary" shape="rounded-pill">{{unit.model.name}}</c-badge>
+                                </li>
+                                <li cListGroupItem class="d-flex justify-content-between align-items-center">
+                                    Capacidad
+                                    <c-badge color="primary" shape="rounded-pill">{{unit.model.power}}kW
+                                        {{unit.model.amps}}Amps</c-badge>
+                                </li>
+                                <li cListGroupItem class="d-flex justify-content-between align-items-center">
+                                    <strong>U.A.</strong>
+                                    <div>{{unit.lastupdate | date :"dd/MM/yyyy hh:mm:ss"}}</div>
+                                </li>
+                            </ul>
+                        </c-col>
+                        <c-col>
+                            <ul cListGroup flush>
+                                <li cListGroupItem class="d-flex justify-content-between align-items-center">
+                                    Estatus
+
+                                    <c-badge [color]="getStateColor(unit.realvalues['34'])"
+                                        shape="rounded-pill">{{getStatus(unit.realvalues['34'])}}</c-badge>
+                                </li>
+                                <li cListGroupItem class="d-flex justify-content-between align-items-center">
+                                    Connectado
+
+                                    <c-badge [color]="unit.connected?'success': 'dark'"
+                                        shape="rounded-pill">{{unit.connected?'Online': 'OffLine'}}</c-badge>
+                                </li>
+                                <li cListGroupItem class="d-flex justify-content-between align-items-center">
+                                    <strong>Compartir</strong>
+                                    <div>
+                                        <button cButton color="info" (click)="createShare()" size="sm" variant="outline">Compartir</button>
+                                    </div>
+                                </li>
+                            </ul>
+                        </c-col>
+
+                    </c-row>
+    
+                </c-card-body>
+            </c-card>
+        </c-col>
+        <c-col lg="4" md="4" *ngIf="[1,2,4,5].includes(user.user_type)">
+            <c-row>
+                <c-col>
+                    <button [disabled]="!unit.connected" style="width: 100%; color: white;" cButton color="success"
+                        (click)="sendCommand('01050000FF008C3A', 'Encender')" >Encender</button>
+                </c-col>
+                <c-col>
+                    <button [disabled]="!unit.connected || unit.realbooleans['43']" style="width: 100%; color: white;" cButton color="danger"
+                        (click)="sendCommand('01050001FF00DDFA', 'Parar')" [variant]="unit.realbooleans['43']? 'outline':undefined">Apagar</button>
+
+                </c-col>
+
+            </c-row>
+            <hr />
+            <c-row>
+                <c-col>
+                    <button [disabled]="!unit.connected || unit.realbooleans['41']" style="width: 100%; color: white;" cButton color="dark"
+                        (click)="sendCommand('01050003FF007C3A', 'Auto')" [variant]="unit.realbooleans['41']? 'outline':undefined">Auto</button>
+
+                </c-col>
+                <c-col>
+                    <button [disabled]="!unit.connected || unit.realbooleans['42']" style="width: 100%; color: white;" cButton color="dark"
+                        (click)="sendCommand('01050004FF00CDFB', 'Manual')" [variant]="unit.realbooleans['42']? 'outline':undefined">Manual</button>
+
+                </c-col>
+            </c-row>
+        </c-col>
+
+    </c-row>
+    <c-row>
+        <c-col>
+            <c-callout color="secondary" class="scout">
+                <h5>Motor</h5>
+                <c-row>
+                    <c-col>
+                        <div>
+                            <ul cListGroup flush>
+
+                                <li cListGroupItem class="d-flex justify-content-between align-items-center">
+                                    <strong>Horometro</strong>
+                                    <c-badge color="primary" shape="rounded-pill">{{unit.realvalues['43'] + "hr " +
+                                        unit.realvalues['44'] + "m " + unit.realvalues['45'] + "s"}}</c-badge>
+                                </li>
+                                <li cListGroupItem class="d-flex justify-content-between align-items-center">
+                                    <strong>Acumulado Arranque</strong>
+                                    <c-badge color="primary" shape="rounded-pill">{{unit.realvalues['47'] + "
+                                        arranques"}}</c-badge>
+                                </li>
+                                <li cListGroupItem class="d-flex justify-content-between align-items-center">
+                                    <strong>Acumulado Energia</strong>
+                                    <c-badge color="primary" shape="rounded-pill">{{unit.realvalues['49'] + "
+                                        Kw"}}</c-badge>
+                                </li>
+
+                                <li cListGroupItem class="d-flex justify-content-between align-items-center">
+                                    <strong>Ubicacion GPS</strong>
+                                    <a size="sm" variant="outline" cButton
+                                        [href]="'https://maps.google.com/?q='+unit.latitude+','+unit.longitude"
+                                        target="_blank">Abrir en Google</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </c-col>
+                    <c-col md>
+                        <div class="progress-group-bars">
+
+                            <label>Aceleracion</label>
+                            <c-progress [value]="calculate(unit.model.rpm + 200, (unit.realvalues['23']))"
+                                color="primary">{{unit.realvalues['23']| number}}
+                                Rpm</c-progress>
+
+                            <label>Pression Aceite</label>
+                            <c-progress [value]="calculate(unit.model.oil + 30, (unit.realvalues['19'] ))"
+                                color="danger">{{unit.realvalues['19'] | number}}
+                                Kpa</c-progress>
+
+                            <label>Tempratura</label>
+                            <c-progress [value]="calculate(unit.model.temp + 30, (unit.realvalues['17']))"
+                                color="warning">{{unit.realvalues['17']| number}}
+                                C</c-progress>
+
+                            <label>Voltaje Bateria</label>
+                            <c-progress [value]="calculate(unit.model.battery + 10, (unit.realvalues['24'] /10))"
+                                color="secondary">{{(unit.realvalues['24'] / 10) | number}} V</c-progress>
+
+                            <label>Combustible</label>
+                            <c-progress [value]="calculate(100, (unit.realvalues['21']))"
+                                color="info">{{(unit.realvalues['21']) | number}}% L</c-progress>
+
+                        </div>
+
+                    </c-col>
+                </c-row>
+
+            </c-callout>
+        </c-col>
+    </c-row>
+    <c-row>
+        <c-col md>
+            <c-callout color="success" class="scout">
+                <h5>CFE</h5>
+                <div class="progress-group-bars">
+                    <label>Voltaje A</label>
+                    <c-progress [value]="calculate(unit.model.voltaje * 1.5, unit.realvalues['0'])"
+                        color="success">{{unit.realvalues['0'] | number}}
+                        V</c-progress>
+
+                    <label>Voltaje B</label>
+                    <c-progress [value]="calculate(unit.model.voltaje * 1.5, unit.realvalues['1'])"
+                        color="success">{{unit.realvalues['1'] | number}}
+                        V</c-progress>
+
+                    <label>Voltaje C</label>
+                    <c-progress [value]="calculate(unit.model.voltaje * 1.5, unit.realvalues['2'])"
+                        color="success">{{unit.realvalues['2'] | number}}
+                        V</c-progress>
+
+                    <label>Frecuencia</label>
+                    <c-progress [value]="calculate(unit.model.hz * 1.5,unit.realvalues['6'] / 10)"
+                        color="dark">{{unit.realvalues['6'] / 10 | number}}
+                        Hz</c-progress>
+
+                </div>
+            </c-callout>
+        </c-col>
+        <c-col md>
+            <c-callout color="warning" class="scout">
+                <h5>Generador</h5>
+                <div class="progress-group-bars">
+                    <label>Voltaje A</label>
+
+                    <c-progress [value]="calculate(unit.model.voltaje * 1.5, unit.realvalues['7'])"
+                        color="success">{{unit.realvalues['7'] | number}}
+                        V</c-progress>
+                    <label>Voltaje B</label>
+
+                    <c-progress [value]="calculate(unit.model.voltaje * 1.5, unit.realvalues['8'])"
+                        color="success">{{unit.realvalues['8']| number}}
+                        V</c-progress>
+                    <label>Voltaje C</label>
+
+                    <c-progress [value]="calculate(unit.model.voltaje * 1.5, unit.realvalues['9'])"
+                        color="success">{{unit.realvalues['9'] | number}}
+                        V</c-progress>
+                    <label>Frecuencia</label>
+                    <c-progress [value]="calculate(unit.model.hz * 1.5, unit.realvalues['13']/10)"
+                        color="dark">{{unit.realvalues['13'] / 10| number}}
+                        Hz</c-progress>
+                </div>
+                <c-row>
+                    <c-col>
+                        <label>Carga A</label>
+                        <c-progress [value]="calculate(unit.model.amps + 30, unit.realvalues['14'])"
+                            color="info">{{unit.realvalues['14'] | number}}
+                            Amps</c-progress>
+                    </c-col>
+                    <c-col>
+                        <label>Carga B</label>
+
+                        <c-progress [value]="calculate(unit.model.amps + 30, unit.realvalues['15'])"
+                            color="info">{{unit.realvalues['15']| number}}
+                            Amps</c-progress>
+
+                    </c-col>
+                    <c-col>
+                        <label>Carga C</label>
+                        <c-progress [value]="calculate(unit.model.amps + 30, unit.realvalues['16'])"
+                            color="info">{{unit.realvalues['16'] | number}}
+                            Amps</c-progress>
+                    </c-col>
+                </c-row>
+                <div class="progress-group-bars mt-2">
+
+
+
+
+
+                </div>
+            </c-callout>
+        </c-col>
+    </c-row>
+    <c-row>
+        <c-col>
+            <c-callout color="dark" class="scout">
+                <c-col>
+                    <c-row>
+                        <h5>Log</h5>
+                    </c-row>
+                    <c-row>
+                        <c-badge class="m-2" *ngFor="let bols of getEntries(unit.realbooleans)" [color]="bols.color" shape="rounded-pill">{{bols.text}}</c-badge>
+                    </c-row>
+                </c-col>
+            </c-callout>
+        </c-col>
+    </c-row>
+</div>

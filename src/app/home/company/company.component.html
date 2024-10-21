@@ -1,0 +1,71 @@
+
+<c-card>
+    <c-card-header>
+        Empresas
+    </c-card-header>
+    <c-card-body>
+        <div *ngIf="loading" class="fade show" style="text-align: center;">
+            <button cButton class="m-1" variant="outline" disabled>
+                <c-spinner aria-hidden="true" size="sm" variant="grow"></c-spinner>
+                Loading...
+              </button>
+        </div>
+        <table cTable hover responsive="md" class="fade show" *ngIf="!loading">
+            <thead>
+                <tr>
+                    <th width="2vw">Nombre</th>
+                    <th width="5vw">RFC</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let company of companies">
+                    <td><strong>{{company.name}}</strong></td>
+                    <td>{{company.rfc}}</td>
+                </tr>
+            </tbody>
+        </table>
+        
+    </c-card-body>
+</c-card>
+<button *ngIf="[4,5].includes(userType)" [cModalToggle]="staticBackdropModal.id" cButton class="float" color="success" style="color: white;"><svg [cIcon]="icons.cilPlus"></svg></button>
+<c-modal #staticBackdropModal backdrop="static" size="lg" alignment="center" id="staticBackdropModal">
+    <c-modal-header>
+        <h5 cModalTitle>Registro de Unidad</h5>
+        <button [cModalToggle]="staticBackdropModal.id" cButtonClose></button>
+    </c-modal-header>
+    <c-modal-body>
+        <form (ngSubmit)="addCompany()"
+            onkeydown="if(event.keyCode === 13) {  alert( 'You have pressed Enter key, use submit button instead');  return false; }"
+            [formGroup]="newCompany">
+            <c-row>
+                <c-col>
+                    <div cFormFloating>
+                        <input [valid]="newCompany.controls.name.valid" id="f0" formControlName="name" cFormControl
+                            placeholder="Nombre" />
+                        <label for="f0">Nombre</label>
+                    </div>
+                </c-col>
+                <c-col>
+                    <div cFormFloating>
+                        <input [valid]="newCompany.controls.rfc.valid" id="f0" formControlName="rfc" cFormControl
+                            placeholder="RFC" />
+                        <label for="f0">RFC</label>
+                    </div>
+
+                </c-col>
+            </c-row>
+          
+            <c-row class="mt-5 text-center">
+                <button type="submit" cButton style="color: white;" color="success" [disabled]="!newCompany.valid">+
+                    Agregar</button>
+            </c-row>
+        </form>
+
+    </c-modal-body>
+    <c-modal-footer>
+        <button [cModalToggle]="staticBackdropModal.id" (click)="newCompany.reset()" cButton style="color: white"
+            color="danger">
+            Cancelar
+        </button>
+    </c-modal-footer>
+</c-modal>
