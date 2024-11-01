@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { IndexComponent } from './home/index/index.component';
@@ -23,9 +22,12 @@ import { UsersComponent } from './home/users/users.component';
 import { CompanyComponent } from './home/company/company.component';
 import { httpInterceptor } from './service/http.interceptor';
 import { UnitShareComponent } from './unit-share/unit-share.component';
+import { HistoricComponent } from './home/historic/historic.component';
+import {ChartjsModule} from "@coreui/angular-chartjs";
 
 @NgModule({
   declarations: [
+    
     AppComponent,
     IndexComponent,
     LayoutComponent,
@@ -38,9 +40,11 @@ import { UnitShareComponent } from './unit-share/unit-share.component';
     ModelsComponent,
     UsersComponent,
     CompanyComponent,
-    UnitShareComponent
+    UnitShareComponent,
+    HistoricComponent
   ],
   imports: [
+    ChartjsModule,
     BrowserModule,
     AppRoutingModule,
     GridModule,
@@ -72,7 +76,8 @@ import { UnitShareComponent } from './unit-share/unit-share.component';
   ],
   providers: [
     provideHttpClient(withInterceptors([httpInterceptor])),
-    IconSetService
+    IconSetService,
+    
   ],
   bootstrap: [AppComponent]
 })

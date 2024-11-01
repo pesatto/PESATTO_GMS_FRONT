@@ -1,5 +1,15 @@
 import { Company } from "./user";
 
+export interface Historic {
+  _id: string;
+  unit: string;
+  realvalues: Realvalues;
+  realbooleans: Realbooleans;
+  timestamp: string;
+  createdAt: string;
+  packetNum: number
+}
+
 export interface Unit {
   realvalues: Realvalues;
   realbooleans: Realbooleans;

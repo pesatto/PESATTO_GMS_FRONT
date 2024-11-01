@@ -10,6 +10,7 @@ import { activeGuardGuard } from './service/active-guard.guard';
 import { UsersComponent } from './home/users/users.component';
 import { CompanyComponent } from './home/company/company.component';
 import { UnitShareComponent } from './unit-share/unit-share.component';
+import { HistoricComponent } from './home/historic/historic.component';
 
 
 const routes: Routes = [
@@ -57,6 +58,10 @@ const routes: Routes = [
       {
         path: 'unit/:unitid',
         component: UnitComponent
+      },
+      {
+        path: 'unit/historic/:unitid',
+        component: HistoricComponent
       },
       {
         path: "users",

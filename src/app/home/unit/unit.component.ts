@@ -1,5 +1,5 @@
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UnitService } from '../../service/unit.service';
 import { Realbooleans, Unit } from '../../models/unit';
 import { ToastrService } from 'ngx-toastr';
@@ -304,7 +304,7 @@ export class UnitComponent implements OnDestroy, OnInit {
   }
 
 
-  constructor(private authService: AuthService,private clipboard: Clipboard, private socketService: SocketService, private unitService: UnitService, private toast: ToastrService) {
+  constructor(private authService: AuthService,private clipboard: Clipboard,private router: Router ,private socketService: SocketService, private unitService: UnitService, private toast: ToastrService) {
     this.loadUnit(this.route.snapshot.paramMap.get('unitid')!)
     this.user = this.authService.get_user()
 
@@ -340,7 +340,9 @@ export class UnitComponent implements OnDestroy, OnInit {
     return filteredEntries;
   }
 
-
+  openHistoric() {
+    this.router.navigate(["/home/unit/historic/" + this.unit._id])
+  }
 
   getStatus(status: any) {
     let states = ["En Reposo", "Precalentando", "Salida Combustible", "Marcha", "Descanso de Marcha", "Retraso de Seguridad", "Inicio Ralenty", "Acelerando", "En espera de Carga", "Corriendo Normal", "Enfriando", "Reposo de Paro", "ETS", "Falla en Paro", "Error en Paro", "Retraso Parado"]
