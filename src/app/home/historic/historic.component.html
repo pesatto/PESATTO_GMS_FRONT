@@ -1,0 +1,89 @@
+<c-row *ngIf="!loaded" class="">
+    <div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
+        <c-spinner color="warning" variant="grow"></c-spinner>
+        <span class="ms-2">Cargando Historial...</span>
+      </div>
+</c-row>
+
+<c-col *ngIf="loaded">
+    <c-row>
+        <c-col lg="4" md="6" sm="12">
+            <c-card>
+                <c-card-header>
+                    Voltaje M
+                </c-card-header>
+                <c-card-body>
+                    
+                            <div *ngIf="loaded">
+                                <c-chart [options]="charOptions" [data]="chartData" type="scatter"></c-chart>
+                    
+                            </div>
+                        
+                   
+                    
+                    
+                </c-card-body>
+            </c-card>
+        </c-col>
+        <c-col lg="4" md="6" sm="12">
+            <c-card>
+                <c-card-header>
+                    Voltaje G
+                </c-card-header>
+                <c-card-body>
+                    
+                            <div *ngIf="loaded">
+                                <c-chart [options]="charOptions" [data]="chartData2" type="scatter"></c-chart>
+                    
+                            </div>
+                        
+                   
+                    
+                    
+                </c-card-body>
+            </c-card>
+        </c-col>
+        <c-col lg="4" md="6" sm="12">
+            <c-card>
+                <c-card-header>
+                    Frecuencias
+                </c-card-header>
+                <c-card-body>
+                    
+                            <div *ngIf="loaded">
+                                <c-chart [options]="charOptions" [data]="chartData3" type="scatter"></c-chart>
+                    
+                            </div>
+                        
+                   
+                    
+                    
+                </c-card-body>
+            </c-card>
+        </c-col>
+    </c-row>
+    <c-row class="my-2">
+        
+        <c-col lg="4" md="6" sm="12">
+            <c-card>
+                <c-card-header>
+                    Corrientes
+                </c-card-header>
+                <c-card-body>
+                    
+                            <div *ngIf="loaded">
+                                <c-chart width="100%" [options]="charOptions" [data]="chartData4" type="scatter"></c-chart>
+                    
+                            </div>
+                        
+                   
+                    
+                    
+                </c-card-body>
+            </c-card>
+        </c-col>
+    </c-row>
+</c-col>
+
+
+
