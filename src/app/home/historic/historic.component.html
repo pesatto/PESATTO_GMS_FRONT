@@ -1,6 +1,6 @@
 <c-row>
     <c-col>
-        <c-date-picker [date]="date" [showAdjacentDays]="false" (valueChange)="check($event)"/>
+        <c-date-picker [date]="today" [showAdjacentDays]="false" (valueChange)="check($event)"/>
 
     </c-col>
 </c-row>
@@ -82,6 +82,24 @@
                     
                             <div *ngIf="loaded">
                                 <c-chart width="100%" [options]="charOptions" [data]="chartData4" type="scatter"></c-chart>
+                    
+                            </div>
+                        
+                   
+                    
+                    
+                </c-card-body>
+            </c-card>
+        </c-col>
+        <c-col lg="4" md="6" sm="12">
+            <c-card>
+                <c-card-header>
+                    Paquete
+                </c-card-header>
+                <c-card-body>
+                    
+                            <div *ngIf="loaded">
+                                <c-chart type="line" width="100%" [options]="charOptions" [data]="chartData5" type="scatter"></c-chart>
                     
                             </div>
                         

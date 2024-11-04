@@ -80,13 +80,21 @@ export class HistoricComponent {
     ]
   }
 
+  chartData5: ChartData<'scatter'> = {
+    datasets: [
+      { label: "Paquete", data: [] }
+
+    ]
+  }
+
   historic: Historic[] = [];
   loaded = false;
+  today = new Date();
   date = new Date();
   maxDate = new Date(this.date.setDate(this.date.getDate() - 90));
 
   constructor(private unitService: UnitService, private toast: ToastrService, private datePipe: DatePipe) {
-    const formattedDate = this.datePipe.transform(this.date, 'dd-MM-yyyy')
+    const formattedDate = this.datePipe.transform(this.today, 'dd-MM-yyyy')
     this.getHistoric(formattedDate!.toString()); // Fetch historical data
   }
 
@@ -127,6 +135,8 @@ export class HistoricComponent {
 
   updateChart(data: Historic) {
     const timestamp = moment(data.createdAt).valueOf();
+    this.chartData5.datasets[0].data.push({ x: timestamp, y: data.packetNum });
+
     this.chartData.datasets[0].data.push({ x: timestamp, y: data.realvalues[0] });
     this.chartData.datasets[1].data.push({ x: timestamp, y: data.realvalues[1] });
     this.chartData.datasets[2].data.push({ x: timestamp, y: data.realvalues[2] });
