@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { IndexComponent } from './home/index/index.component';
 import { LayoutComponent } from './layout/layout.component';
 import { FooterComponent } from './layout/footer/footer.component';
-import {GridModule, SidebarModule, FormModule, DropdownModule, AvatarModule, HeaderModule, CardModule, ButtonModule, TableModule, CalloutModule, ProgressModule, SpinnerModule, ToastModule, BadgeModule, ListGroupModule, AlertModule, ModalModule, ButtonGroupModule, BorderDirective} from '@coreui/angular-pro'
+import {GridModule, SidebarModule, FormModule, DropdownModule, AvatarModule, HeaderModule, CardModule, ButtonModule, TableModule, CalloutModule, ProgressModule, SpinnerModule, ToastModule, BadgeModule, ListGroupModule, AlertModule, ModalModule, ButtonGroupModule, BorderDirective, DatePickerModule} from '@coreui/angular-pro'
 import {NgScrollbarModule} from 'ngx-scrollbar';
 import { HeaderComponent } from './layout/header/header.component'
 import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
@@ -73,6 +73,7 @@ import {ChartjsModule} from "@coreui/angular-chartjs";
     ToastrModule.forRoot(), // ToastrModule added
     ButtonGroupModule,
     BorderDirective,
+    DatePickerModule
   ],
   providers: [
     provideHttpClient(withInterceptors([httpInterceptor])),

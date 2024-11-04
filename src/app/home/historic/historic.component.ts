@@ -8,11 +8,14 @@ import { ChartData, ChartOptions } from 'chart.js';
 import 'chartjs-adapter-moment';
 import 'chartjs-plugin-zoom';
 import { Generic } from '../../models/generic';
+import { DatePipe } from '@angular/common';
+
 
 @Component({
   selector: 'app-historic',
   templateUrl: './historic.component.html',
-  styleUrl: './historic.component.scss'
+  styleUrl: './historic.component.scss',
+  providers: [DatePipe]
 })
 export class HistoricComponent {
   private route = inject(ActivatedRoute);
@@ -79,14 +82,23 @@ export class HistoricComponent {
 
   historic: Historic[] = [];
   loaded = false;
+  date = new Date();
+  maxDate = new Date(this.date.setDate(this.date.getDate() - 90));
 
-  constructor(private unitService: UnitService, private toast: ToastrService) {
-    this.getHistoric(); // Fetch historical data
+  constructor(private unitService: UnitService, private toast: ToastrService, private datePipe: DatePipe) {
+    const formattedDate = this.datePipe.transform(this.date, 'dd-MM-yyyy')
+    this.getHistoric(formattedDate!.toString()); // Fetch historical data
+  }
+
+  check (value: any) {
+    const formattedDate = this.datePipe.transform(value, 'dd-MM-yyyy');
+    this.loaded = false
+    this.getHistoric(formattedDate!.toString())
   }
 
   // Fetch historic data
-  getHistoric() {
-    this.unitService.getHistoric(this.route.snapshot.paramMap.get('unitid')!).subscribe({
+  getHistoric(date: string) {
+    this.unitService.getHistoric(this.route.snapshot.paramMap.get('unitid')!, date).subscribe({
       next: (response: Generic) => this.processHistoricData(response),
       error: () => this.toast.error("Error obteniendo historial")
     });

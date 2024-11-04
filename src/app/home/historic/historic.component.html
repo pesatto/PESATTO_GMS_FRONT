@@ -1,9 +1,18 @@
+<c-row>
+    <c-col>
+        <c-date-picker [date]="date" [showAdjacentDays]="false" (valueChange)="check($event)"/>
+
+    </c-col>
+</c-row>
+
 <c-row *ngIf="!loaded" class="">
     <div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
         <c-spinner color="warning" variant="grow"></c-spinner>
         <span class="ms-2">Cargando Historial...</span>
       </div>
 </c-row>
+
+
 
 <c-col *ngIf="loaded">
     <c-row>

@@ -23,8 +23,8 @@ export class UnitService {
     return this.http.get<Generic>('https://gms.pesatto.com/units')
   }
 
-  getHistoric(code: string): Observable<Generic> {
-    return this.http.get<Generic>('https://gms.pesatto.com/units/historic/' + code)
+  getHistoric(code: string, date: string): Observable<Generic> {
+    return this.http.get<Generic>('https://gms.pesatto.com/units/historic/' + code + "/" + date)
   }
 
   getUnit(unitId: string): Observable<Generic> {
