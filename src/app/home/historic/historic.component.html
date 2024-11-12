@@ -1,6 +1,6 @@
 <c-row>
     <c-col>
-        <c-date-picker [date]="today" [showAdjacentDays]="false" (valueChange)="check($event)"/>
+        <c-date-picker [date]="today" [minDate]="maxDate" [maxDate]="today" [showAdjacentDays]="false" (valueChange)="check($event)"/>
 
     </c-col>
 </c-row>
@@ -14,7 +14,7 @@
 
 
 
-<c-col *ngIf="loaded">
+<c-col *ngIf="loaded" class="mt-2">
     <c-row>
         <c-col lg="4" md="6" sm="12">
             <c-card>
@@ -70,6 +70,7 @@
                 </c-card-body>
             </c-card>
         </c-col>
+        
     </c-row>
     <c-row class="my-2">
         
@@ -100,6 +101,24 @@
                     
                             <div *ngIf="loaded">
                                 <c-chart type="line" width="100%" [options]="charOptions" [data]="chartData5" type="scatter"></c-chart>
+                    
+                            </div>
+                        
+                   
+                    
+                    
+                </c-card-body>
+            </c-card>
+        </c-col>
+        <c-col lg="4" md="6" sm="12">
+            <c-card>
+                <c-card-header>
+                    Datos de Motor
+                </c-card-header>
+                <c-card-body>
+                    
+                            <div *ngIf="loaded">
+                                <c-chart [options]="charOptions" [data]="chartData6" type="scatter"></c-chart>
                     
                             </div>
                         
