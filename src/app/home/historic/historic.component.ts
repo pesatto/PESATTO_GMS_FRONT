@@ -93,8 +93,15 @@ export class HistoricComponent {
     datasets: [
       { label: "Voltaje V", data: [] },
       { label: "Nivel de Combustible", data: []},
-      { label: "Presion de aceite", data: [] },
       { label: "Temperatura C", data: [] }
+
+    ]
+  }
+
+  chartData7: ChartData<'scatter'> = {
+    datasets: [
+      { label: "Presion de aceite", data: [] },
+      
 
     ]
   }
@@ -166,7 +173,8 @@ export class HistoricComponent {
 
     this.chartData6.datasets[0].data.push({ x: timestamp, y: data.realvalues[24]/10 });
     this.chartData6.datasets[1].data.push({ x: timestamp, y: data.realvalues[21]/10 });
-    this.chartData6.datasets[2].data.push({ x: timestamp, y: data.realvalues[19] });
-    this.chartData6.datasets[3].data.push({ x: timestamp, y: data.realvalues[17] });
+    this.chartData6.datasets[2].data.push({ x: timestamp, y: data.realvalues[17] });
+
+    this.chartData7.datasets[0].data.push({ x: timestamp, y: data.realvalues[19] });
   }
 }
