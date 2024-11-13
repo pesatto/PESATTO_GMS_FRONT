@@ -83,6 +83,19 @@
 
                 </c-col>
             </c-row>
+            <hr />
+            <c-row>
+                <c-col>
+                    <button style="width: 100%; color: white;" cButton color="primary"
+                        (click)="sendCommand('01050006FF006C3B', 'CO MAIN')">C/O Main</button>
+
+                </c-col>
+                <c-col>
+                    <button style="width: 100%; color: white;" cButton color="primary"
+                        (click)="sendCommand('01050005FF009C3B', 'CO GEN')">C/O Gen</button>
+
+                </c-col>
+            </c-row>
         </c-col>
 
     </c-row>
