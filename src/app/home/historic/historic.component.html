@@ -92,15 +92,16 @@
                 </c-card-body>
             </c-card>
         </c-col>
+        
         <c-col lg="4" md="6" sm="12">
             <c-card>
                 <c-card-header>
-                    Paquete
+                    Datos de Motor
                 </c-card-header>
                 <c-card-body>
                     
                             <div *ngIf="loaded">
-                                <c-chart type="line" width="100%" [options]="charOptions" [data]="chartData5" type="scatter"></c-chart>
+                                <c-chart [options]="charOptions" [data]="chartData6" type="scatter"></c-chart>
                     
                             </div>
                         
@@ -118,7 +119,27 @@
                 <c-card-body>
                     
                             <div *ngIf="loaded">
-                                <c-chart [options]="charOptions" [data]="chartData6" type="scatter"></c-chart>
+                                <c-chart [options]="charOptions" [data]="chartData7" type="scatter"></c-chart>
+                    
+                            </div>
+                        
+                   
+                    
+                    
+                </c-card-body>
+            </c-card>
+        </c-col>
+    </c-row>
+    <c-row>
+        <c-col lg="4" md="6" sm="12">
+            <c-card>
+                <c-card-header>
+                    Paquete
+                </c-card-header>
+                <c-card-body>
+                    
+                            <div *ngIf="loaded">
+                                <c-chart type="line" width="100%" [options]="charOptions" [data]="chartData5" type="scatter"></c-chart>
                     
                             </div>
                         
