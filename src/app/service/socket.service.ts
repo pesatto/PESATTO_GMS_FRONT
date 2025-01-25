@@ -18,7 +18,7 @@ export class SocketService {
     this.socket = io("https://gms.pesatto.com", {
       
       path: '/socket.io',
-      transports: ['polling','websocket'],
+      transports: ['websocket', 'polling'],
       secure: true,
     });
 
