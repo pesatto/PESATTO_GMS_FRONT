@@ -13,7 +13,14 @@ export class SocketService {
   ids: string[] = []
 
   constructor() {
-    this.socket = io("https://gms.pesatto.com");
+
+  
+    this.socket = io("https://gms.pesatto.com", {
+      
+      path: '/socket.io',
+      transports: ['polling','websocket'],
+      secure: true,
+    });
 
     this.socket.on('connect', () => {
       this.join(this.ids);
